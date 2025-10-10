@@ -1,5 +1,6 @@
-/**
- * Marvin Philippe
+
+/*
+ *Marvin Philippe
  *
  * CEN-3024C-13950
  *
@@ -12,7 +13,7 @@
  * Each VideoGame object represents one record in the system and contains attributes such as ID,
  * title, genre, release year, price, and rating. The class provides only the needed getter and setter methods
  * to allow controlled access and modification of these attributes but limit the amount of void methods.
- */
+ **/
 
 public class VideoGame {
     private int gameID;

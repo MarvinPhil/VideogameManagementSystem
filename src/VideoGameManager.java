@@ -5,7 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
-/**
+/*
  * Marvin Philippe
  *
  * CEN-3024C-13950
@@ -18,7 +18,7 @@ import java.util.Scanner;
  * This class manages the collection of VideoGame objects in memory for the project.
  * It implements all CRUD operations (Create, Read, Update, Delete) and one custom feature:
  * calculating the average rating of all games. It also handles file reading and
- */
+* */
 
 public class VideoGameManager {
     Map<Integer, VideoGame> videogames = new HashMap<>();

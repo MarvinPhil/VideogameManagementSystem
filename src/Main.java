@@ -17,6 +17,7 @@ import java.util.Scanner;
 * - See full list of video game entries
 * - Update/Change video game entries
 * */
+
 public class Main {
 
     public static void main(String[] args) {
