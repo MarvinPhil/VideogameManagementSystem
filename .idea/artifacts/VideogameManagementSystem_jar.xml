@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="VideogameManagementSystem:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/VideogameManagementSystem_jar</output-path>
+    <root id="archive" name="VideogameManagementSystem.jar">
+      <element id="module-output" name="VideogameManagementSystem" />
+    </root>
+  </artifact>
+</component>
