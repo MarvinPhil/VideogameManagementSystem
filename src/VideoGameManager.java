@@ -119,7 +119,21 @@ public class VideoGameManager {
                     continue;
                 }
 
-                return "Game removed successfully\n";
+                //added delete functionality
+                VideoGame game = videogames.get(gameID);
+                System.out.println("Is this the game you would like to remove?");
+                System.out.println(game);
+                System.out.print("Type 'yes' to confirm: ");
+                String confirm = scn.nextLine().trim().toLowerCase();
+
+                if (confirm.equals("yes")) {
+                    videogames.remove(gameID);
+                    return "Game removed successfully\n";
+                }else{
+                    return "Deletion cancelled.\n";
+                }
+
+
 
             } catch (InputMismatchException e){
                 System.out.println("\nInvalid input type. Please try again.\n");

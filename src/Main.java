@@ -19,6 +19,10 @@ import java.util.Scanner;
 * - Delete video game entries with ID number
 * - See full list of video game entries
 * - Update/Change video game entries
+*
+* Version 1.1:
+* -delete function fixed
+*
 * */
 
 public class Main {
