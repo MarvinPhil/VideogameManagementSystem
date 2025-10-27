@@ -5,6 +5,16 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.IOException;
 
+/*
+ * Marvin Philippe
+ *
+ * CEN-3024C-13950
+ *
+ * 10/26/2025
+ *
+ * This class performs tests for the methods from VideoGameManager
+ * */
+
 public class VideoGameManagerTest {
 
     private VideoGameManager manager;

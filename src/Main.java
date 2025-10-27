@@ -13,6 +13,8 @@ import java.util.Scanner;
 *
 * CEN-3024C-13950
 *
+* This class is where the main application enters when not using the gui to use the program
+*
 * This program is a database management system for video games
 * This program will allow users to:
 * - Add new video games to the database(before phase 4, data will be stored in hashmap) as text file or manually
