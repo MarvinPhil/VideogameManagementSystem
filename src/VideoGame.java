@@ -64,4 +64,24 @@ public class VideoGame {
     public double getRating() {
         return rating;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public Integer getGameID() {
+        return gameID;
+    }
 }

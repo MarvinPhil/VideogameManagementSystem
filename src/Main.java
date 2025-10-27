@@ -21,7 +21,12 @@ import java.util.Scanner;
 * - Update/Change video game entries
 *
 * Version 1.1:
-* -delete function fixed
+* -delete function
+* -tests
+*
+* Version 1.2:
+* -JavaFX gui
+* -get methods in VideoGame class for gui to work
 *
 * */
 
