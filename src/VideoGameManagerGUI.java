@@ -110,20 +110,43 @@ public class VideoGameManagerGUI extends Application {
         // Add Game
         addBtn.setOnAction(e -> {
             try {
-                int id = data.size() + 1; // simple auto-ID
                 String title = titleField.getText().trim();
                 String genre = genreField.getText().trim();
-                int year = Integer.parseInt(yearField.getText().trim());
-                double price = Double.parseDouble(priceField.getText().trim());
-                double rating = Double.parseDouble(ratingField.getText().trim());
 
+                if (title.isEmpty() || genre.isEmpty()) {
+                    showError("Title and Genre cannot be blank.");
+                    return;
+                }
+
+                int year = Integer.parseInt(yearField.getText().trim());
+                if (year < 1950) {
+                    showError("Release year must be 1950 or later.");
+                    return;
+                }
+
+                double price = Double.parseDouble(priceField.getText().trim());
+                if (price < 0) {
+                    showError("Price cannot be negative.");
+                    return;
+                }
+
+                double rating = Double.parseDouble(ratingField.getText().trim());
+                if (rating < 0 || rating > 10) {
+                    showError("Rating must be between 0 and 10.");
+                    return;
+                }
+
+                int id = data.size() + 1; // simple auto-ID
                 VideoGame newGame = new VideoGame(id, title, genre, year, price, rating);
                 manager.videogames.put(id, newGame);
                 data.add(newGame);
                 clearFields(titleField, genreField, yearField, priceField, ratingField);
-                statusLabel.setText("Game added successfully!");
+                showSuccess("Game added successfully!");
+
+            } catch (NumberFormatException ex) {
+                showError("Year, Price, and Rating must be numeric values.");
             } catch (Exception ex) {
-                statusLabel.setText("Invalid input. Please check all fields.");
+                showError("Unexpected error while adding game.");
             }
         });
 
@@ -131,24 +154,44 @@ public class VideoGameManagerGUI extends Application {
         updateBtn.setOnAction(e -> {
             VideoGame selected = table.getSelectionModel().getSelectedItem();
             if (selected == null) {
-                statusLabel.setText("Please select a game to update.");
+                showError("Please select a game to update.");
                 return;
             }
 
             try {
-                selected.setTitle(titleField.getText().trim().isEmpty() ? selected.getTitle() : titleField.getText().trim());
-                selected.setGenre(genreField.getText().trim().isEmpty() ? selected.getGenre() : genreField.getText().trim());
-                if (!yearField.getText().trim().isEmpty())
-                    selected.setReleaseYear(Integer.parseInt(yearField.getText().trim()));
-                if (!priceField.getText().trim().isEmpty())
-                    selected.setPrice(Double.parseDouble(priceField.getText().trim()));
-                if (!ratingField.getText().trim().isEmpty())
-                    selected.setRating(Double.parseDouble(ratingField.getText().trim()));
+                if (!titleField.getText().trim().isEmpty())
+                    selected.setTitle(titleField.getText().trim());
+                if (!genreField.getText().trim().isEmpty())
+                    selected.setGenre(genreField.getText().trim());
+                if (!yearField.getText().trim().isEmpty()) {
+                    int newYear = Integer.parseInt(yearField.getText().trim());
+                    if (newYear < 1950) {
+                        showError("Year must be 1950 or later.");
+                        return;
+                    }
+                    selected.setReleaseYear(newYear);
+                }
+                if (!priceField.getText().trim().isEmpty()) {
+                    double newPrice = Double.parseDouble(priceField.getText().trim());
+                    if (newPrice < 0) {
+                        showError("Price cannot be negative.");
+                        return;
+                    }
+                    selected.setPrice(newPrice);
+                }
+                if (!ratingField.getText().trim().isEmpty()) {
+                    double newRating = Double.parseDouble(ratingField.getText().trim());
+                    if (newRating < 0 || newRating > 10) {
+                        showError("Rating must be between 0 and 10.");
+                        return;
+                    }
+                    selected.setRating(newRating);
+                }
 
                 table.refresh();
-                statusLabel.setText("Game updated successfully!");
-            } catch (Exception ex) {
-                statusLabel.setText("Invalid input. Update failed.");
+                showSuccess("Game updated successfully!");
+            } catch (NumberFormatException ex) {
+                showError("Invalid numeric input.");
             }
         });
 
@@ -156,31 +199,36 @@ public class VideoGameManagerGUI extends Application {
         deleteBtn.setOnAction(e -> {
             VideoGame selected = table.getSelectionModel().getSelectedItem();
             if (selected == null) {
-                statusLabel.setText("Please select a game to delete.");
+                showError("Please select a game to delete.");
                 return;
             }
+
             manager.videogames.remove(selected.getGameID());
             data.remove(selected);
             table.refresh();
-            statusLabel.setText("Game deleted successfully!");
+            showSuccess("Game deleted successfully!");
         });
 
         // Show All
         showAllBtn.setOnAction(e -> {
+            if (manager.videogames.isEmpty()) {
+                showError("No games available to display.");
+                return;
+            }
             data.setAll(manager.videogames.values());
             table.refresh();
-            statusLabel.setText("All games displayed.");
+            showSuccess("All games displayed.");
         });
 
         // Custom Action: Average Rating
         avgBtn.setOnAction(e -> {
             if (manager.videogames.isEmpty()) {
-                statusLabel.setText("No games to calculate average.");
+                showError("No games available to calculate average rating.");
                 return;
             }
             double total = manager.videogames.values().stream().mapToDouble(VideoGame::getRating).sum();
             double avg = total / manager.videogames.size();
-            statusLabel.setText(String.format("Average Rating: %.2f", avg));
+            showSuccess(String.format("Average Rating: %.2f", avg));
         });
 
         // Add all UI elements
@@ -194,12 +242,34 @@ public class VideoGameManagerGUI extends Application {
     }
 
     /**
-     * Clears input fields after adding a game.
+     * Clears input fields after adding or updating a game.
      */
     private void clearFields(TextField... fields) {
         for (TextField f : fields) {
             f.clear();
         }
+    }
+
+    /**
+     * Displays an error message in red text and optionally with an alert box.
+     */
+    private void showError(String message) {
+        statusLabel.setText(message);
+        statusLabel.setStyle("-fx-text-fill: red;");
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Invalid Input");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /**
+     * Displays a success message in green text.
+     */
+    private void showSuccess(String message) {
+        statusLabel.setText(message);
+        statusLabel.setStyle("-fx-text-fill: green;");
     }
 
     public static void main(String[] args) {
