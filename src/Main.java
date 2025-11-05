@@ -30,6 +30,9 @@ import java.util.Scanner;
 * -JavaFX gui
 * -get methods in VideoGame class for gui to work
 *
+* Version 2.0:
+* -SQLite database connectivity
+* -more comments
 * */
 
 public class Main {

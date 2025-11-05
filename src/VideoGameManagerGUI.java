@@ -29,6 +29,13 @@ public class VideoGameManagerGUI extends Application {
     private TableView<VideoGame> table = new TableView<>();
     private Label statusLabel = new Label("Ready.");
 
+
+    /*
+     * Method Name: start
+     * Purpose: Initializes and displays the main GUI window. Prompts the user to select a database
+     * and sets up the UI components including panels, table, and control buttons.
+     * argument primaryStage The main window for the JavaFX application.
+     */
     @Override
     public void start(Stage primaryStage) {
 
@@ -59,12 +66,22 @@ public class VideoGameManagerGUI extends Application {
         primaryStage.show();
     }
 
+    /*
+     * Method Name: makeTitle
+     * Purpose: Creates and returns the title label for the application UI.
+     * return A styled Label displaying the application title.
+     */
     private Label makeTitle() {
         Label title = new Label("Video Game Manager");
         title.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-padding: 10;");
         return title;
     }
 
+    /*
+     * Method Name: makeTable
+     * Purpose: Configures and returns the TableView that displays video game records.
+     * return A TableView displaying a list of VideoGame objects.
+     */
     private TableView<VideoGame> makeTable() {
         TableColumn<VideoGame, Integer> idCol = new TableColumn<>("ID");
         idCol.setCellValueFactory(new PropertyValueFactory<>("gameID"));
@@ -89,6 +106,12 @@ public class VideoGameManagerGUI extends Application {
         return table;
     }
 
+    /*
+     * Method Name: makeControlPanel
+     * Purpose: Creates and returns the left-side control panel containing input fields and
+     * buttons for adding, updating, deleting, displaying, and analyzing game data.
+     * return A VBox containing all control UI elements.
+     */
     private VBox makeControlPanel() {
 
         TextField titleField = new TextField();
@@ -187,9 +210,31 @@ public class VideoGameManagerGUI extends Application {
         return v;
     }
 
+    /**
+     * Method Name: refreshTable
+     * Purpose: Reloads the TableView with the most current database data.
+     */
     private void refreshTable() { data.setAll(db.getAllGames()); table.refresh(); }
+
+    /**
+     * Method Name: clear
+     * Purpose: Clears all text fields passed into the method.
+     * argument fields One or more TextField objects that should be cleared.
+     */
     private void clear(TextField... fields) { for (TextField f : fields) f.clear(); }
+
+    /**
+     * Method Name: showAlert
+     * Purpose: Displays an error message in a pop-up window.
+     * argument title The title of the alert dialog.
+     * argument msg The message to display inside the alert.
+     * return No return value (void).
+     */
     private void showAlert(String title, String msg) { new Alert(Alert.AlertType.ERROR, msg).show(); }
 
+    /*
+     * Method Name: main
+     * Purpose: Launches the JavaFX GUI application.
+     */
     public static void main(String[] args) { launch(args); }
 }

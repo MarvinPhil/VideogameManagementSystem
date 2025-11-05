@@ -2,6 +2,20 @@ import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/*
+*
+* Marvin Philippe
+*
+* CEN-3024C-13950
+*
+* 11/05/2025
+*
+* This class acts as an intermediary between the GUI and database and separates
+* the data access logic from the business logic in the system, to help keep in line with the MVC architecture.
+* Taking the place and job of VideoGameManager when working with databases instead of hashmaps.
+*
+* */
+
 public class VideoGameDAO {
 
     private Connection conn;
@@ -24,6 +38,7 @@ public class VideoGameDAO {
     /*
      * getAllGames
      * Purpose: Returns all game records from the database.
+     * returns an observable list of videogame objects
      */
     public ObservableList<VideoGame> getAllGames() {
         ObservableList<VideoGame> list = FXCollections.observableArrayList();
@@ -53,6 +68,8 @@ public class VideoGameDAO {
     /*
      * addGame
      * Inserts a new video game into the database.
+     * arguments are the game's 6 attributes
+     * returns true or false
      */
     public boolean addGame(String title, String genre, int year, double price, double rating) {
         String sql = "INSERT INTO videogames(title, genre, releaseyear, price, rating) VALUES (?, ?, ?, ?, ?)";
@@ -72,7 +89,9 @@ public class VideoGameDAO {
 
     /*
      * updateGame
+     * arguments are the game's 6 attributes
      * Updates an existing game record.
+     * returns true or false
      */
     public boolean updateGame(int id, String title, String genre, int year, double price, double rating) {
         String sql = "UPDATE videogames SET title=?, genre=?, releaseyear=?, price=?, rating=? WHERE gameid=?";
@@ -95,6 +114,8 @@ public class VideoGameDAO {
 
     /*
      * deleteGame
+     * arguments is game id
+     * returns true or false
      */
     public boolean deleteGame(int id) {
         String sql = "DELETE FROM videogames WHERE gameid=?";
@@ -110,6 +131,8 @@ public class VideoGameDAO {
 
     /*
      * calculateAverageRating
+     * performs caluclations for average in the database
+     * returns a decimal point value
      */
     public double calculateAverageRating() {
         String sql = "SELECT AVG(rating) AS avg FROM videogames";
