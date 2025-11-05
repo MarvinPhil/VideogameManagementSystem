@@ -114,18 +114,40 @@ public class VideoGameManagerGUI extends Application {
 
         addBtn.setOnAction(e -> {
             try {
-                if (db.addGame(titleField.getText(), genreField.getText(),
-                        Integer.parseInt(yearField.getText()), Double.parseDouble(priceField.getText()),
-                        Double.parseDouble(ratingField.getText()))) {
+                String title = titleField.getText().trim();
+                String genre = genreField.getText().trim();
 
+                if (title.isEmpty() || genre.isEmpty()) {
+                    statusLabel.setText("Title and Genre cannot be blank.");
+                    return;
+                }
+
+                int year = Integer.parseInt(yearField.getText().trim());
+                if (year < 1950 || year > 2025) {
+                    statusLabel.setText("Year must be between 1950 and 2025.");
+                    return;
+                }
+
+                double price = Double.parseDouble(priceField.getText().trim());
+                if (price < 0) {
+                    statusLabel.setText("Price cannot be negative.");
+                    return;
+                }
+
+                double rating = Double.parseDouble(ratingField.getText().trim());
+                if (rating < 0 || rating > 10) {
+                    statusLabel.setText("Rating must be 0 to 10.");
+                    return;
+                }
+
+                if (db.addGame(title, genre, year, price, rating)) {
                     refreshTable();
                     clear(titleField, genreField, yearField, priceField, ratingField);
                     statusLabel.setText("Game Added!");
-                } else {
-                    statusLabel.setText("Failed to Add Game.");
                 }
+
             } catch (Exception ex) {
-                statusLabel.setText("Invalid input.");
+                statusLabel.setText("Invalid input. Check your fields.");
             }
         });
 
