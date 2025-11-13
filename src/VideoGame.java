@@ -1,5 +1,5 @@
 
-/*
+/**
  *Marvin Philippe
  *
  * CEN-3024C-13950
@@ -23,6 +23,16 @@ public class VideoGame {
     private double price;
     private double rating;
 
+    /**
+     * Constructor for initializing video game entries/objects
+     *
+     * @param gameID the game's unique Identification number
+     * @param title name of the game
+     * @param genre games's genre
+     * @param releaseYear when the game came out
+     * @param price how much the game cost
+     * @param rating rating from 1-10, how good is the game
+     */
     VideoGame(int gameID, String title, String genre, int releaseYear, double price, double rating) {
         this.gameID = gameID;
         this.title = title;
@@ -33,26 +43,50 @@ public class VideoGame {
     }
 
 
+    /**
+     * initialize or change the param
+     * @param Title
+     */
     public void setTitle(String Title) {
         this.title = Title;
     }
 
+    /**
+     * initialize or change the param
+     * @param Genre
+     */
     public void setGenre(String Genre) {
         this.genre = Genre;
     }
 
+    /**
+     * initialize or change the param
+     * @param Year
+     */
     public void setReleaseYear(int Year) {
         this.releaseYear = Year;
     }
 
+    /**
+     * initialize or change the param
+     * @param Price
+     */
     public void setPrice(double Price) {
         this.price = Price;
     }
 
+    /**
+     * initialize or change the param
+     * @param Rating
+     */
     public void setRating(double Rating) {
         this.rating = Rating;
     }
 
+    /**
+     *
+     * @return the attributes of this video game/entry
+     */
     @Override
     public String toString() {
         return String.format(
@@ -61,26 +95,50 @@ public class VideoGame {
         );
     }
 
+    /**
+     *
+     * @return
+     */
     public double getRating() {
         return rating;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getGenre() {
         return genre;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getReleaseYear() {
         return releaseYear;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getPrice() {
         return price;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getGameID() {
         return gameID;
     }

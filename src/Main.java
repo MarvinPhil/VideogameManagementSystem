@@ -35,11 +35,18 @@ import java.util.Scanner;
 * -more comments
 * */
 
+/**
+ * Program starts here if not using gui and holds main method
+ */
 public class Main {
 
+    /**
+     * For command line users, this is where the progam starts from and what they see instead of the GUI
+     * @param args
+     * @exception InputMismatchException if the user does not put in the right type of value
+     */
     public static void main(String[] args) {
         Scanner scn = new Scanner(System.in);
-        //Map<Integer, String> videoGameDB = new HashMap<>();
         VideoGameManager manager = new VideoGameManager();
 
         System.out.println("**************** Welcome to the VideoGame Management System ****************");

@@ -5,7 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
-/*
+/**
  * Marvin Philippe
  *
  * CEN-3024C-13950
@@ -24,6 +24,12 @@ public class VideoGameManager {
     Map<Integer, VideoGame> videogames = new HashMap<>();
 
      //manually add games
+
+    /**
+     *
+     * @param scn
+     * @return string if successful
+     */
     public String addGame1(Scanner scn){
         while(true){
             try{
@@ -101,6 +107,12 @@ public class VideoGameManager {
 
 
     }
+
+    /**
+     *
+     * @param scn
+     * @return string indicating if game was or wasn't deleted
+     */
      public String removeGame(Scanner scn){
         while(true){
             try{
@@ -141,6 +153,12 @@ public class VideoGameManager {
             }
         }
      }
+
+    /**
+     * update game entry values
+     * @param scn
+     * @return string indicating if game was or wasn't updated
+     */
      public String updateGame(Scanner scn){
         while(true){
             try{
@@ -250,6 +268,10 @@ public class VideoGameManager {
         }
      }
 
+    /**
+     *
+     * @return prints all games to screnn
+     */
     public String viewAllGames() {
         if (videogames.isEmpty()) {
             return "No games available to display.\n";
@@ -264,6 +286,12 @@ public class VideoGameManager {
     }
 
     // add games from file
+
+    /**
+     * text file version of addgame
+     * @param scn
+     * @return string indicating if game was added successfully
+     */
      public String addGame2(Scanner scn) {
          System.out.print("Enter the file path: ");
          String filePath = scn.nextLine().trim();
@@ -317,6 +345,10 @@ public class VideoGameManager {
          return count + " game(s) added successfully from file.\n";
      }
 
+    /**
+     *
+     * @return string with averages of ratings
+     */
     public String calculateAverageRating() {
         if (videogames.isEmpty()) {
             return "No games available to calculate average rating.\n";

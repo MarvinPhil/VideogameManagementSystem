@@ -2,7 +2,7 @@ import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-/*
+/**
 *
 * Marvin Philippe
 *
@@ -20,11 +20,11 @@ public class VideoGameDAO {
 
     private Connection conn;
 
-    /*
+    /**
      * connectToDatabase
      * Purpose: Connects to the SQLite database using the user-provided file path.
-     * dbPath - File path entered by the user.
-     * return true if connection successful, false otherwise.
+     * @param dbPath - File path entered by the user.
+     * @return true if connection successful, false otherwise.
      */
     public boolean connectToDatabase(String dbPath) {
         try {
@@ -35,10 +35,10 @@ public class VideoGameDAO {
         }
     }
 
-    /*
+    /**
      * getAllGames
      * Purpose: Returns all game records from the database.
-     * returns an observable list of videogame objects
+     * @return an observable list of videogame objects
      */
     public ObservableList<VideoGame> getAllGames() {
         ObservableList<VideoGame> list = FXCollections.observableArrayList();
@@ -65,11 +65,16 @@ public class VideoGameDAO {
         return list;
     }
 
-    /*
+    /**
      * addGame
      * Inserts a new video game into the database.
      * arguments are the game's 6 attributes
-     * returns true or false
+     * @param title
+     * @param genre
+     * @param year
+     * @param price
+     * @param rating
+     * @return true or false
      */
     public boolean addGame(String title, String genre, int year, double price, double rating) {
         String sql = "INSERT INTO videogames(title, genre, releaseyear, price, rating) VALUES (?, ?, ?, ?, ?)";
@@ -87,11 +92,15 @@ public class VideoGameDAO {
         }
     }
 
-    /*
+    /**
      * updateGame
-     * arguments are the game's 6 attributes
      * Updates an existing game record.
-     * returns true or false
+     * @param title
+     * @param genre
+     * @param year
+     * @param price
+     * @param rating
+     * @return true or false
      */
     public boolean updateGame(int id, String title, String genre, int year, double price, double rating) {
         String sql = "UPDATE videogames SET title=?, genre=?, releaseyear=?, price=?, rating=? WHERE gameid=?";
@@ -112,10 +121,10 @@ public class VideoGameDAO {
         }
     }
 
-    /*
+    /**
      * deleteGame
-     * arguments is game id
-     * returns true or false
+     * @param id
+     * @return true or false
      */
     public boolean deleteGame(int id) {
         String sql = "DELETE FROM videogames WHERE gameid=?";
@@ -129,10 +138,10 @@ public class VideoGameDAO {
         }
     }
 
-    /*
+    /**
      * calculateAverageRating
      * performs caluclations for average in the database
-     * returns a decimal point value
+     * @return a decimal point value
      */
     public double calculateAverageRating() {
         String sql = "SELECT AVG(rating) AS avg FROM videogames";

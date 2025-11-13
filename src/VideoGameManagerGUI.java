@@ -30,7 +30,7 @@ public class VideoGameManagerGUI extends Application {
     private Label statusLabel = new Label("Ready.");
 
 
-    /*
+    /**
      * Method Name: start
      * Purpose: Initializes and displays the main GUI window. Prompts the user to select a database
      * and sets up the UI components including panels, table, and control buttons.
@@ -66,7 +66,7 @@ public class VideoGameManagerGUI extends Application {
         primaryStage.show();
     }
 
-    /*
+    /**
      * Method Name: makeTitle
      * Purpose: Creates and returns the title label for the application UI.
      * return A styled Label displaying the application title.
@@ -77,7 +77,7 @@ public class VideoGameManagerGUI extends Application {
         return title;
     }
 
-    /*
+    /**
      * Method Name: makeTable
      * Purpose: Configures and returns the TableView that displays video game records.
      * return A TableView displaying a list of VideoGame objects.
@@ -106,7 +106,7 @@ public class VideoGameManagerGUI extends Application {
         return table;
     }
 
-    /*
+    /**
      * Method Name: makeControlPanel
      * Purpose: Creates and returns the left-side control panel containing input fields and
      * buttons for adding, updating, deleting, displaying, and analyzing game data.
@@ -232,7 +232,7 @@ public class VideoGameManagerGUI extends Application {
      */
     private void showAlert(String title, String msg) { new Alert(Alert.AlertType.ERROR, msg).show(); }
 
-    /*
+    /**
      * Method Name: main
      * Purpose: Launches the JavaFX GUI application.
      */
