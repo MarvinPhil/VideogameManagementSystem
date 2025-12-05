@@ -122,6 +122,72 @@ public class VideoGameDAO {
     }
 
     /**
+     * updateGamePartial
+     * Purpose: Updates only the fields the user actually filled in.
+     * @param id     - ID of the game to update
+     * @param title  - new title OR null/blank to skip
+     * @param genre  - new genre OR null/blank to skip
+     * @param year   - new release year OR null/negative to skip
+     * @param price  - new price OR negative to skip
+     * @param rating - new rating OR negative to skip
+     * @return true if update successful, false otherwise
+     */
+    public boolean updateGamePartial(int id, String title, String genre,
+                                     Integer year, Double price, Double rating) {
+
+        try {
+            // Build SQL dynamically based on which fields are valid
+            StringBuilder sql = new StringBuilder("UPDATE videogames SET ");
+            boolean needsComma = false;
+
+            if (title != null && !title.isBlank()) {
+                sql.append("title=?");
+                needsComma = true;
+            }
+            if (genre != null && !genre.isBlank()) {
+                if (needsComma) sql.append(", ");
+                sql.append("genre=?");
+                needsComma = true;
+            }
+            if (year != null && year >= 1950 && year <= 2025) {
+                if (needsComma) sql.append(", ");
+                sql.append("releaseyear=?");
+                needsComma = true;
+            }
+            if (price != null && price >= 0) {
+                if (needsComma) sql.append(", ");
+                sql.append("price=?");
+                needsComma = true;
+            }
+            if (rating != null && rating >= 0 && rating <= 10) {
+                if (needsComma) sql.append(", ");
+                sql.append("rating=?");
+            }
+
+            sql.append(" WHERE gameid=?");
+
+            PreparedStatement stmt = conn.prepareStatement(sql.toString());
+
+            // Fill in parameters in correct order
+            int index = 1;
+
+            if (title != null && !title.isBlank()) stmt.setString(index++, title);
+            if (genre != null && !genre.isBlank()) stmt.setString(index++, genre);
+            if (year != null && year >= 1950 && year <= 2025) stmt.setInt(index++, year);
+            if (price != null && price >= 0) stmt.setDouble(index++, price);
+            if (rating != null && rating >= 0 && rating <= 10) stmt.setDouble(index++, rating);
+
+            stmt.setInt(index, id);
+
+            stmt.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    /**
      * deleteGame
      * @param id
      * @return true or false

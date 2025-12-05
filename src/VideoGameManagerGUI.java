@@ -22,6 +22,9 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+/**
+* The code for the GUI and the main method where the program starts if using the GUI.
+* */
 public class VideoGameManagerGUI extends Application {
 
     private VideoGameDAO db = new VideoGameDAO(); // DAO
@@ -34,7 +37,7 @@ public class VideoGameManagerGUI extends Application {
      * Method Name: start
      * Purpose: Initializes and displays the main GUI window. Prompts the user to select a database
      * and sets up the UI components including panels, table, and control buttons.
-     * argument primaryStage The main window for the JavaFX application.
+     * @param primaryStage The main window for the JavaFX application.
      */
     @Override
     public void start(Stage primaryStage) {
@@ -69,7 +72,7 @@ public class VideoGameManagerGUI extends Application {
     /**
      * Method Name: makeTitle
      * Purpose: Creates and returns the title label for the application UI.
-     * return A styled Label displaying the application title.
+     * @return A styled Label displaying the application title.
      */
     private Label makeTitle() {
         Label title = new Label("Video Game Manager");
@@ -80,7 +83,7 @@ public class VideoGameManagerGUI extends Application {
     /**
      * Method Name: makeTable
      * Purpose: Configures and returns the TableView that displays video game records.
-     * return A TableView displaying a list of VideoGame objects.
+     * @return A TableView displaying a list of VideoGame objects.
      */
     private TableView<VideoGame> makeTable() {
         TableColumn<VideoGame, Integer> idCol = new TableColumn<>("ID");
@@ -110,7 +113,7 @@ public class VideoGameManagerGUI extends Application {
      * Method Name: makeControlPanel
      * Purpose: Creates and returns the left-side control panel containing input fields and
      * buttons for adding, updating, deleting, displaying, and analyzing game data.
-     * return A VBox containing all control UI elements.
+     * @return A VBox containing all control UI elements.
      */
     private VBox makeControlPanel() {
 
@@ -176,20 +179,52 @@ public class VideoGameManagerGUI extends Application {
 
         updateBtn.setOnAction(e -> {
             VideoGame selected = table.getSelectionModel().getSelectedItem();
-            if (selected == null) { statusLabel.setText("Select a game first."); return; }
+            if (selected == null) {
+                statusLabel.setText("Select a game first.");
+                return;
+            }
 
             try {
-                if (db.updateGame(selected.getGameID(),
-                        titleField.getText(), genreField.getText(),
-                        Integer.parseInt(yearField.getText()), Double.parseDouble(priceField.getText()),
-                        Double.parseDouble(ratingField.getText()))) {
+                // Read fields but only treat them as updates if valid
+                String title = titleField.getText().trim();
+                if (title.isBlank()) title = null;
 
+                String genre = genreField.getText().trim();
+                if (genre.isBlank()) genre = null;
+
+                Integer year = null;
+                if (!yearField.getText().trim().isBlank()) {
+                    int parsed = Integer.parseInt(yearField.getText().trim());
+                    if (parsed >= 1950 && parsed <= 2025) year = parsed;
+                }
+
+                Double price = null;
+                if (!priceField.getText().trim().isBlank()) {
+                    double parsed = Double.parseDouble(priceField.getText().trim());
+                    if (parsed >= 0) price = parsed;
+                }
+
+                Double rating = null;
+                if (!ratingField.getText().trim().isBlank()) {
+                    double parsed = Double.parseDouble(ratingField.getText().trim());
+                    if (parsed >= 0 && parsed <= 10) rating = parsed;
+                }
+
+                boolean success = db.updateGamePartial(
+                        selected.getGameID(),
+                        title, genre, year, price, rating
+                );
+
+                if (success) {
                     refreshTable();
                     statusLabel.setText("Game Updated!");
                 } else {
                     statusLabel.setText("Update Failed.");
                 }
-            } catch (Exception ex) { statusLabel.setText("Invalid input."); }
+
+            } catch (Exception ex) {
+                statusLabel.setText("Invalid input.");
+            }
         });
 
         deleteBtn.setOnAction(e -> {
@@ -226,9 +261,9 @@ public class VideoGameManagerGUI extends Application {
     /**
      * Method Name: showAlert
      * Purpose: Displays an error message in a pop-up window.
-     * argument title The title of the alert dialog.
-     * argument msg The message to display inside the alert.
-     * return No return value (void).
+     * @param title The title of the alert dialog.
+     * @param msg The message to display inside the alert.
+     *
      */
     private void showAlert(String title, String msg) { new Alert(Alert.AlertType.ERROR, msg).show(); }
 

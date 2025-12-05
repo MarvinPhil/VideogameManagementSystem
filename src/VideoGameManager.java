@@ -23,10 +23,9 @@ import java.util.Scanner;
 public class VideoGameManager {
     Map<Integer, VideoGame> videogames = new HashMap<>();
 
-     //manually add games
 
     /**
-     *
+     * manually add games
      * @param scn
      * @return string if successful
      */
@@ -109,7 +108,7 @@ public class VideoGameManager {
     }
 
     /**
-     *
+     * delete a game from the list
      * @param scn
      * @return string indicating if game was or wasn't deleted
      */
@@ -269,8 +268,8 @@ public class VideoGameManager {
      }
 
     /**
-     *
-     * @return prints all games to screnn
+     *display all games
+     * @return prints all games to screen
      */
     public String viewAllGames() {
         if (videogames.isEmpty()) {
@@ -346,7 +345,7 @@ public class VideoGameManager {
      }
 
     /**
-     *
+     * get the averages of all the games' ratings
      * @return string with averages of ratings
      */
     public String calculateAverageRating() {
